@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 import datetime
 from django.template import Template, Context
+from django.template.loader import get_template
 
 class Persona(object):
     
@@ -15,19 +16,22 @@ def saludo(request): # primera vista
     
     nombre = "Jogico"
     nombre_mujer = "Pily"
-    temas2 = ["Libro1", "Libro2", "Libro3", "Libro4", "Libro5", "libro6"]
+    #temas2 = ["Libro1", "Libro2", "Libro3", "Libro4", "Libro5", "Libro6"]
+    temas2 = []
     
     fecha_actual = datetime.datetime.now()
     
-    doc_externo = open("C:/Users/Jr/Documents/ProjectosDjango/proyecto1/proyecto1/Plantillas/miplantilla.html")
+    #doc_externo = open("C:/Users/Jr/Documents/ProjectosDjango/proyecto1/proyecto1/Plantillas/miplantilla.html")
    
-    plt=Template(doc_externo.read())
+    #plt=Template(doc_externo.read())
    
-    doc_externo.close()
+    #doc_externo.close()
+    
+    doc_externo = get_template("miplantilla.html")
    
-    ctx= Context({"nombre_persona":nombre, "nombre_mujer":nombre_mujer, "fecha_actual":fecha_actual, "nombre_persona2":p1.nombre2, "apellido_persona2":p1.apellido2, "temas":["plantillas", "modelos", "formularios", "vistas", "Despliegues"], "temas2":temas2})
+    #ctx= Context({"nombre_persona":nombre, "nombre_mujer":nombre_mujer, "fecha_actual":fecha_actual, "nombre_persona2":p1.nombre2, "apellido_persona2":p1.apellido2, "temas":["plantillas", "modelos", "formularios", "vistas", "Despliegues"], "temas2":temas2})
    
-    documento = plt.render(ctx)  
+    documento = doc_externo.render({"nombre_persona":nombre, "nombre_mujer":nombre_mujer, "fecha_actual":fecha_actual, "nombre_persona2":p1.nombre2, "apellido_persona2":p1.apellido2, "temas":["plantillas", "modelos", "formularios", "vistas", "Despliegues"], "temas2":temas2})  
     
     return HttpResponse(documento)
 
